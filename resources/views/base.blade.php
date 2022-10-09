@@ -10,20 +10,7 @@
 </head>
 <body class="bg-light">
     <div class="container">
-        <main>
-            <div class="py-5 text-center">
-                <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/docs/5.2/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-                <h2>Survey</h2>
-                <p class="lead">This is a survey of your personal desires. Please fill it in as faithfully as possible. The answers will then be analyzed by our teams. You can only answer once.</p>
-            </div>
-
-            @yield('content')
-
-        </main>
-
-        <footer class="my-5 pt-5 text-muted text-center text-small">
-            <p class="mb-1">© 2022 David Patiashvili</p>
-        </footer>
+        @yield('content')
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>

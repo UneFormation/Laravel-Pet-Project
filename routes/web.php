@@ -14,7 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/survey');
 });
 Route::get('/survey', [App\Http\Controllers\SurveyController::class, 'create']);
 Route::post('/survey', [App\Http\Controllers\SurveyController::class, 'store']);
+Route::prefix('admin')->group(function() {
+    Route::get('/', [\App\Http\Controllers\AdminController::class, 'index'])->middleware('auth')->name('admin.dashboard');
+    Route::get('/login', [\App\Http\Controllers\AuthController::class, 'index'])->middleware('guest')->name('admin.login');
+    Route::post('/login', [\App\Http\Controllers\AuthController::class, 'authenticate'])->middleware('guest')->name('admin.authenticate');
+    Route::get('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->middleware('auth')->name('admin.logout');
+});
