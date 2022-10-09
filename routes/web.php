@@ -23,4 +23,7 @@ Route::prefix('admin')->group(function() {
     Route::get('/login', [\App\Http\Controllers\AuthController::class, 'index'])->middleware('guest')->name('admin.login');
     Route::post('/login', [\App\Http\Controllers\AuthController::class, 'authenticate'])->middleware('guest')->name('admin.authenticate');
     Route::get('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->middleware('auth')->name('admin.logout');
+
+    Route::get('/survey/{survey}', [\App\Http\Controllers\AdminController::class, 'survey'])->middleware('auth')->name('admin.survey');
+
 });

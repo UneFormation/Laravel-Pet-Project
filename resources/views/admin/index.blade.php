@@ -21,6 +21,7 @@
                     <td>{{$survey->firstname}}</td>
                     <td>{{$survey->lastname}}</td>
                     <td>{{$survey->email}}</td>
+                    <td><a href="{{ route('admin.survey', ['survey' => $survey->id]) }}" class="btn btn-sm btn-primary">Show</a></td>
                 </tr>
             @endforeach
             </tbody>

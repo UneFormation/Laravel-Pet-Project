@@ -15,4 +15,9 @@ class AdminController extends Controller
 
         return view('admin.index', ['surveys' => $surveys]);
     }
+
+    public function survey(Survey $survey)
+    {
+        return view('admin.survey', ['survey' => $survey]);
+    }
 }
