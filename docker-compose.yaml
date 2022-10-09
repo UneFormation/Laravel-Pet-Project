@@ -1,0 +1,88 @@
+version: '3.1'
+
+services:
+  php:
+    container_name: php.laravel-test.le-bocal
+    networks:
+      - default
+    depends_on:
+      - database
+    links:
+      - 'database:db'
+    build:
+      dockerfile: docker/Dockerfile
+      context: .
+    volumes:
+      - ./:/app
+    working_dir: /app
+    entrypoint:
+      - php
+    env_file:
+      - .env
+
+  composer:
+    container_name: composer.laravel-test.le-bocal
+    networks:
+      - default
+    build:
+      dockerfile: docker/Dockerfile
+      context: .
+    volumes:
+      - ./:/app
+    working_dir: /app
+    entrypoint:
+      - composer
+    env_file:
+      - .env
+
+  database:
+    container_name: postgres.laravel-test.le-bocal
+    image: postgres:alpine
+    networks:
+      - default
+    volumes:
+      - database-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=app_password
+      - POSTGRES_USER=app_user
+      - POSTGRES_DB=app
+
+  web:
+    container_name: web.laravel-test.le-bocal
+    networks:
+      - default
+      - traefik
+    depends_on:
+      - database
+    links:
+      - 'database:db'
+    build:
+      dockerfile: docker/Dockerfile
+      context: .
+    volumes:
+      - ./:/app
+    working_dir: /app
+    entrypoint:
+      - php
+      - artisan
+      - serve
+      - --host=0.0.0.0
+      - --port=80
+    env_file:
+      - .env
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.laravel_lebocal.tls=true
+      - traefik.http.services.laravel_lebocal.loadBalancer.server.port=80
+      - traefik.http.routers.laravel_lebocal.tls.certResolver=patiashvili
+      - traefik.http.routers.laravel_lebocal.rule=Host(`laravel.patiashvili`)
+
+volumes:
+  database-data:
+    driver: local
+
+networks:
+  default:
+    driver: bridge
+  traefik:
+    name: traefik_proxy
