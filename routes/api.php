@@ -14,3 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'login']);
+Route::middleware('auth:sanctum')->resource('survey', \App\Http\Controllers\API\SurveyController::class);

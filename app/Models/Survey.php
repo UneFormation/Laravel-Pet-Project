@@ -19,7 +19,5 @@ class Survey extends Model
         'country',
     ];
 
-    protected $hidden = [
-        'ip'
-    ];
+    protected $hidden = [];
 }
