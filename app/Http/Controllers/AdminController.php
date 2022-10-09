@@ -9,11 +9,17 @@ class AdminController extends Controller
 {
     public function index(Request $request)
     {
-        $surveys = Survey::query()
-            ->orderBy('id', 'desc')
+        $q = $request->get('q', '');
+
+        $query = Survey::query();
+        if ($q) {
+            $query = $query->where('email', '=', $q);
+        }
+
+        $surveys = $query->orderBy('id', 'desc')
             ->paginate(15);
 
-        return view('admin.index', ['surveys' => $surveys]);
+        return view('admin.index', ['surveys' => $surveys, 'query' => $q]);
     }
 
     public function survey(Survey $survey)

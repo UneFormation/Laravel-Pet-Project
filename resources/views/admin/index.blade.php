@@ -1,6 +1,15 @@
 @extends('admin.base')
 
 @section('content')
+    <form method="get" class="row gap-3">
+        <input type="hidden" name="page" value="1">
+        <div class=" col-9">
+            <input class="form-control" type="text" placeholder="Email..." aria-label="default input example" name="q" value="{{$query}}">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3">Search</button>
+        </div>
+    </form>
     @if(!$surveys->total())
         <div class="alert alert-primary">Not exist surveys.</div>
     @else
